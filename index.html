@@ -1,0 +1,916 @@
+<title>Faye Lyu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Jost:wght@300;400;500;600&display=swap">
+
+<style>
+/* ─── Tokens ─────────────────────────────────── */
+:root {
+  --bg:          #F4EFE6;
+  --bg-2:        #EAE2D1;
+  --surface:     #EDE5D4;
+  --surface-2:   #E3D9C6;
+  --text:        #1C1814;
+  --text-2:      #7D7066;
+  --text-3:      #A69B8E;
+  --accent:      #4E6B45;
+  --accent-lt:   #7EA874;
+  --warm:        #C08B52;
+  --line:        #D3C8B8;
+  --nav-h:       64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #18150F;
+    --bg-2:      #211D16;
+    --surface:   #252019;
+    --surface-2: #2E2820;
+    --text:      #EAE1D3;
+    --text-2:    #8A7E73;
+    --text-3:    #5E5449;
+    --accent:    #7BAD72;
+    --accent-lt: #A8D49F;
+    --warm:      #D4A368;
+    --line:      #38302A;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #18150F;
+  --bg-2:      #211D16;
+  --surface:   #252019;
+  --surface-2: #2E2820;
+  --text:      #EAE1D3;
+  --text-2:    #8A7E73;
+  --text-3:    #5E5449;
+  --accent:    #7BAD72;
+  --accent-lt: #A8D49F;
+  --warm:      #D4A368;
+  --line:      #38302A;
+}
+
+/* ─── Reset ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  padding-inline: 24px;
+  padding-block: 0;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── Nav ────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(20px, 5vw, 64px);
+  z-index: 100;
+  transition: background 0.3s;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ─── Layout ─────────────────────────────────── */
+.wrap {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* ─── Hero ───────────────────────────────────── */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: calc(var(--nav-h) + 40px) 80px;
+}
+.hero-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-wrap: balance;
+  margin-bottom: 28px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 300;
+  color: var(--text-2);
+  max-width: 540px;
+  line-height: 1.7;
+  margin-bottom: 44px;
+}
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 100px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border: 1.5px solid var(--accent);
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-3);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: var(--line);
+  animation: scrollpulse 2s ease-in-out infinite;
+}
+@keyframes scrollpulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.15); }
+}
+.hero { position: relative; }
+
+/* ─── Section shell ──────────────────────────── */
+section {
+  padding-block: 96px;
+  border-top: 1px solid var(--line);
+}
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.section-heading {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-wrap: balance;
+  margin-bottom: 48px;
+}
+
+/* ─── Work grid ──────────────────────────────── */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 24px;
+}
+.project-card {
+  background: var(--surface);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.1);
+}
+.card-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thumb 1 — Catfish Bar */
+.thumb-catfish {
+  background: #182E1E;
+}
+.thumb-catfish::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 55%, rgba(200,147,52,0.25) 0%, transparent 70%);
+}
+.thumb-catfish .th-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.th-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: #D4A84A;
+  text-shadow: 0 0 32px rgba(200,147,52,0.6), 0 0 64px rgba(200,147,52,0.3);
+  letter-spacing: 0.04em;
+}
+.th-sub {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(180,210,170,0.6);
+}
+.thumb-catfish .th-bar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(200,147,52,0.5), transparent);
+}
+
+/* Thumb 2 — AI Gaming */
+.thumb-ai {
+  background: #0E1625;
+}
+.thumb-ai::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(108,140,210,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,140,210,0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.thumb-ai::after {
+  content: '';
+  position: absolute;
+  top: 30%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(130,100,210,0.35) 0%, transparent 70%);
+}
+.thumb-ai .th-chips {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 1;
+}
+.th-chip {
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+.th-chip-1 { background: rgba(100,160,220,0.18); color: rgba(140,190,240,0.9); border: 1px solid rgba(100,160,220,0.25); }
+.th-chip-2 { background: rgba(130,100,210,0.18); color: rgba(170,150,240,0.9); border: 1px solid rgba(130,100,210,0.25); font-style: italic; font-family: 'Fraunces', serif; font-size: 0.8rem; letter-spacing: 0; }
+.th-chip-3 { background: rgba(100,160,220,0.12); color: rgba(140,190,240,0.7); border: 1px solid rgba(100,160,220,0.15); }
+
+/* Thumb 3 — Animal Well */
+.thumb-well {
+  background: #1A2614;
+}
+.thumb-well-dots {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.thumb-well-dots::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(120,170,90,0.2) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+.thumb-well .th-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.th-well-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: rgba(190,230,160,0.95);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.th-well-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(150,200,120,0.5);
+}
+.th-pixel-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+.th-pixel {
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+}
+
+/* Card body */
+.card-body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.tag-green { background: rgba(78,107,69,0.15); color: var(--accent); }
+.card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.card-desc {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin-bottom: 20px;
+  flex: 1;
+}
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+.card-role { font-weight: 500; }
+.card-link {
+  color: var(--accent);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+.card-link:hover { gap: 8px; }
+
+/* ─── About ──────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.about-bio p {
+  font-size: 1rem;
+  color: var(--text-2);
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+.about-bio p:last-child { margin-bottom: 0; }
+.about-bio strong { color: var(--text); font-weight: 500; }
+
+.skills-block { display: flex; flex-direction: column; gap: 32px; }
+.skill-group-title {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 12px;
+}
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+.skill-list li {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  font-size: 0.83rem;
+  color: var(--text-2);
+  background: var(--surface);
+}
+
+/* ─── Featured highlight ─────────────────────── */
+.highlight-bar {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px 36px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 64px;
+  border: 1px solid var(--line);
+}
+.hl-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+.hl-text {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.hl-text a { color: var(--accent); border-bottom: 1px solid var(--accent-lt); }
+
+/* ─── Footer ─────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--line);
+  padding-block: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+.footer-name {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text);
+}
+.footer-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--line);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  transition: all 0.2s;
+}
+.email-link:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── Responsive ─────────────────────────────── */
+@media (max-width: 680px) {
+  .nav-links { gap: 20px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .highlight-bar { flex-direction: column; align-items: flex-start; }
+  .footer-links { flex-direction: column; gap: 16px; align-items: center; }
+  section { padding-block: 60px; }
+}
+
+/* ─── Side Projects ──────────────────────────── */
+.side-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 20px;
+}
+.side-card {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.side-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+.side-thumb {
+  width: 100%;
+  aspect-ratio: 16/7;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.thumb-particles {
+  background: #F0EDE6;
+}
+.thumb-particles-dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .thumb-particles { background: #1C1914; }
+}
+:root[data-theme="dark"] .thumb-particles { background: #1C1914; }
+.thumb-particles canvas-sim {
+  position: absolute; inset: 0;
+}
+.particles-visual {
+  position: absolute; inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.particles-visual svg {
+  opacity: 0.7;
+}
+.side-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.side-card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
+}
+.side-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  flex: 1;
+}
+.side-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+/* ─── Reduce motion ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-line { animation: none; }
+  .project-card { transition: none; }
+  .btn { transition: none; }
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#experiments">Experiments</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="wrap">
+  <section class="hero" id="top" style="border-top:none;">
+    <p class="hero-eyebrow">UX &amp; Interaction Design</p>
+    <h1>
+      Hi, I'm<br>
+      <em>Faye Lyu</em>
+    </h1>
+    <p class="hero-sub">
+      I design digital experiences grounded in real people's needs — from research and systems thinking to interactive prototypes and coded interfaces.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">See my work</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+</div>
+
+<!-- WORK -->
+<div class="wrap">
+  <section id="work">
+    <p class="section-label">Work</p>
+    <h2 class="section-heading">Things I've made &amp; figured out</h2>
+
+    <div class="highlight-bar">
+      <div class="hl-dot"></div>
+      <p class="hl-text">
+        These projects span user research, Figma prototyping, and front-end development which are all rooted in real live problems.
+      </p>
+    </div>
+
+    <div class="work-grid">
+
+      <!-- Card 1: Catfish Bar -->
+      <article class="project-card">
+        <div class="card-thumb thumb-catfish">
+          <div class="th-text">
+            <span class="th-sub">30 Gertrude St, Fitzroy</span>
+            <span class="th-title">The Catfish Bar</span>
+            <span class="th-sub">Craft Beer &amp; Live Music</span>
+          </div>
+          <div class="th-bar"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-green">UI Development</span>
+            <span class="tag">UX Research</span>
+            <span class="tag">Front-End</span>
+          </div>
+          <h3 class="card-title">The Catfish Bar — Website Redesign</h3>
+          <p class="card-desc">
+            Transformed a broken bar website into a fully functional e-commerce experience — complete with a live product catalogue of 12 craft beers, real-time search and filtering, a persistent shopping cart, and a checkout flow. All built in vanilla HTML, CSS, and JavaScript across 7 pages.
+          </p>
+          <div class="card-meta">
+            <span class="card-role">Website Redesign · 2026</span>
+            <a href="catfish.html" class="card-link">Case study →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: AI Gaming -->
+      <article class="project-card">
+        <div class="card-thumb thumb-ai">
+          <div class="th-chips">
+            <span class="th-chip th-chip-1">9 user interviews · thematic analysis</span>
+            <span class="th-chip th-chip-2">How can AI assist<br>teams in multiplayer games?</span>
+            <span class="th-chip th-chip-3">3 personas · conceptual design</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-green">UX Research</span>
+            <span class="tag">Interaction Design</span>
+            <span class="tag">Personas</span>
+          </div>
+          <h3 class="card-title">AI Teammate — Gaming Communication Research</h3>
+          <p class="card-desc">
+            Led user research exploring how AI can reduce toxicity and miscommunication in multiplayer games. Conducted 9 semi-structured interviews, identified 4 key themes through thematic analysis, and co-designed AI-powered features including real-time translation, game plan summarisation, and moderation tools.
+          </p>
+          <div class="card-meta">
+            <span class="card-role">UX Research · 2025</span>
+            <a href="ai-gaming.html" class="card-link">Case study →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Animal Well -->
+      <article class="project-card">
+        <div class="card-thumb thumb-well">
+          <div class="thumb-well-dots"></div>
+          <div class="th-icon">
+            <span class="th-well-name">Animal Well</span>
+            <span class="th-well-sub">Fan Guide &amp; Web Experience</span>
+            <div class="th-pixel-row">
+              <div class="th-pixel" style="background:rgba(140,200,100,0.7)"></div>
+              <div class="th-pixel" style="background:rgba(100,170,80,0.5)"></div>
+              <div class="th-pixel" style="background:rgba(160,220,120,0.8)"></div>
+              <div class="th-pixel" style="background:rgba(80,150,60,0.4)"></div>
+              <div class="th-pixel" style="background:rgba(140,200,100,0.6)"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-green">Web Design</span>
+            <span class="tag">HTML / CSS / JS</span>
+            <span class="tag">Game</span>
+          </div>
+          <h3 class="card-title">Animal Well — Fan Guide Website</h3>
+          <p class="card-desc">
+            Designed and built a fan guide for the indie puzzle-exploration game <em>Animal Well</em>. The site covers gameplay tips, an interactive item tools reference, and a quiz — all styled with the game's custom typeface and illustrated assets to create an immersive, on-brand experience.
+          </p>
+          <div class="card-meta">
+            <span class="card-role">Web Design · 2025</span>
+            <a href="animal-well.html" class="card-link">Case study →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+<!-- SIDE PROJECTS -->
+<div class="wrap">
+  <section id="experiments">
+    <p class="section-label">Side Projects</p>
+    <h2 class="section-heading">Experiments</h2>
+
+    <div class="side-grid">
+
+      <!-- 粒子流 -->
+      <article class="side-card">
+        <div class="side-thumb thumb-particles">
+          <div class="particles-visual">
+            <svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Rain particles -->
+              <g opacity="0.5">
+                <circle cx="30" cy="12" r="1.5" fill="#7D7066"/>
+                <circle cx="30" cy="24" r="1.5" fill="#7D7066" opacity="0.7"/>
+                <circle cx="30" cy="36" r="1.5" fill="#7D7066" opacity="0.4"/>
+                <circle cx="30" cy="48" r="1" fill="#7D7066" opacity="0.2"/>
+              </g>
+              <g opacity="0.5">
+                <circle cx="52" cy="20" r="1.5" fill="#7D7066"/>
+                <circle cx="52" cy="32" r="1.5" fill="#7D7066" opacity="0.7"/>
+                <circle cx="52" cy="44" r="1" fill="#7D7066" opacity="0.4"/>
+                <circle cx="52" cy="56" r="1" fill="#7D7066" opacity="0.2"/>
+              </g>
+              <g opacity="0.4">
+                <circle cx="74" cy="8" r="1.5" fill="#7D7066"/>
+                <circle cx="74" cy="20" r="1.5" fill="#7D7066" opacity="0.7"/>
+                <circle cx="74" cy="32" r="1.5" fill="#7D7066" opacity="0.5"/>
+                <circle cx="74" cy="44" r="1" fill="#7D7066" opacity="0.3"/>
+                <circle cx="74" cy="56" r="1" fill="#7D7066" opacity="0.1"/>
+              </g>
+              <!-- Clock text -->
+              <text x="120" y="34" font-family="serif" font-size="22" font-weight="300" fill="#1C1814" text-anchor="middle" opacity="0.75">21:39</text>
+              <text x="120" y="52" font-family="sans-serif" font-size="8" fill="#7D7066" text-anchor="middle" letter-spacing="2" opacity="0.6">FOCUS</text>
+              <!-- More particles right side -->
+              <g opacity="0.35">
+                <circle cx="180" cy="16" r="2" fill="#C08B52"/>
+                <circle cx="186" cy="28" r="1.5" fill="#C08B52" opacity="0.7"/>
+                <circle cx="178" cy="38" r="1" fill="#C08B52" opacity="0.5"/>
+                <circle cx="184" cy="50" r="1.5" fill="#C08B52" opacity="0.3"/>
+                <circle cx="180" cy="62" r="1" fill="#C08B52" opacity="0.15"/>
+              </g>
+              <g opacity="0.3">
+                <circle cx="208" cy="22" r="1.5" fill="#4E6B45"/>
+                <circle cx="214" cy="34" r="2" fill="#4E6B45" opacity="0.7"/>
+                <circle cx="206" cy="46" r="1.5" fill="#4E6B45" opacity="0.4"/>
+                <circle cx="212" cy="58" r="1" fill="#4E6B45" opacity="0.2"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="side-tags">
+          <span class="tag">Vanilla JS</span>
+          <span class="tag">Ambient Sound</span>
+          <span class="tag tag-green">Productivity</span>
+        </div>
+        <h3 class="side-card-title">粒子流 · Focus Companion</h3>
+        <p class="side-card-desc">
+          A lo-fi focus tool with real-time clock, Pomodoro timer, and ambient sound mixer — rain, thunder, wind, stream, fire, ocean. Born from watching raindrops trace paths down a window.
+        </p>
+        <div class="side-card-foot">
+          <span>Creative Experiment · 2025</span>
+          <a href="https://faye10101.github.io/lofi-particles/" target="_blank" rel="noopener" class="card-link">Live demo →</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div class="wrap">
+  <section id="about">
+    <p class="section-label">About</p>
+    <h2 class="section-heading">A designer who codes<br><em style="font-family:'Fraunces',serif; font-weight:300; font-style:italic; color:var(--accent)">and cares about the why</em></h2>
+
+    <div class="about-grid">
+      <div class="about-bio">
+        <p>
+          I'm <strong>Faye Lyu</strong>, a second-year Bachelor of Design student majoring in <strong>User Experience Design</strong> at the University of Melbourne. I came to UX from a genuine curiosity about how people think and behave — not just what they do, but why.
+        </p>
+        <p>
+          My work tends to live at the edge of research and craft. I care deeply about the moments of friction that go unnoticed — the unclear navigation, the broken purchase flow, the teammate who gets ignored. Good design, to me, is noticing those moments and doing something quiet and useful about them.
+        </p>
+      </div>
+
+      <div class="skills-block">
+        <div>
+          <p class="skill-group-title">UX Methods</p>
+          <ul class="skill-list">
+            <li>User Interviews</li>
+            <li>Thematic Analysis</li>
+            <li>Persona Creation</li>
+            <li>Journey Mapping</li>
+            <li>Usability Testing</li>
+            <li>Wireframing</li>
+          </ul>
+        </div>
+        <div>
+          <p class="skill-group-title">Design &amp; Prototyping</p>
+          <ul class="skill-list">
+            <li>Figma</li>
+            <li>Interaction Design</li>
+            <li>Visual Hierarchy</li>
+            <li>Responsive Design</li>
+          </ul>
+        </div>
+        <div>
+          <p class="skill-group-title">Development</p>
+          <ul class="skill-list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>GitHub Pages</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT / FOOTER -->
+<div class="wrap">
+  <footer id="contact">
+    <p class="footer-name">Faye Lyu</p>
+    <a href="mailto:fayelyu101@gmail.com" class="email-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      fayelyu101@gmail.com
+    </a>
+    <ul class="footer-links">
+      <li><a href="https://github.com/Faye10101" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </footer>
+</div>

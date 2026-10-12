@@ -1,0 +1,348 @@
+<title>The Catfish Bar — Faye Lyu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg:#F4EFE6; --bg-2:#EAE2D1; --surface:#EDE5D4; --surface-2:#E3D9C6;
+  --text:#1C1814; --text-2:#7D7066; --text-3:#A69B8E;
+  --accent:#4E6B45; --accent-lt:#7EA874; --warm:#C08B52; --line:#D3C8B8;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#18150F; --bg-2:#211D16; --surface:#252019; --surface-2:#2E2820;
+    --text:#EAE1D3; --text-2:#8A7E73; --text-3:#5E5449;
+    --accent:#7BAD72; --accent-lt:#A8D49F; --warm:#D4A368; --line:#38302A;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#18150F; --bg-2:#211D16; --surface:#252019; --surface-2:#2E2820;
+  --text:#EAE1D3; --text-2:#8A7E73; --text-3:#5E5449;
+  --accent:#7BAD72; --accent-lt:#A8D49F; --warm:#D4A368; --line:#38302A;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 16px; line-height: 1.65;
+  padding-inline: 24px; padding-block: 0;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h); background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(20px,5vw,64px); z-index: 100;
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 400; }
+.nav-logo span { color: var(--accent); }
+.nav-back {
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--text-2); display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--accent); }
+
+.wrap { max-width: 800px; margin-inline: auto; }
+
+/* Hero */
+.cs-hero {
+  padding-block: calc(var(--nav-h) + 60px) 64px;
+  border-bottom: 1px solid var(--line);
+}
+.cs-eyebrow {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 24px;
+}
+.tag {
+  display: inline-block; padding: 3px 10px;
+  border-radius: 100px; font-size: 0.72rem;
+  font-weight: 500; letter-spacing: 0.05em;
+  background: var(--surface-2); color: var(--text-2);
+}
+.tag-green { background: rgba(78,107,69,0.15); color: var(--accent); }
+.cs-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -0.02em; text-wrap: balance;
+  margin-bottom: 20px;
+}
+.cs-title em { font-style: italic; color: var(--accent); }
+.cs-subtitle { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; margin-bottom: 40px; }
+.cs-meta {
+  display: flex; flex-wrap: wrap; gap: 24px;
+  padding-top: 28px; border-top: 1px solid var(--line);
+}
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+.meta-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+/* Thumb */
+.cs-thumb {
+  width: 100%; aspect-ratio: 16/7;
+  border-radius: 16px; overflow: hidden;
+  margin-block: 48px;
+  background: #182E1E; position: relative;
+}
+.cs-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 55%, rgba(200,147,52,0.3) 0%, transparent 70%);
+}
+.cs-thumb-text {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+}
+.ct-sub { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(180,210,170,0.5); }
+.ct-title {
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #D4A84A;
+  text-shadow: 0 0 40px rgba(200,147,52,0.7), 0 0 80px rgba(200,147,52,0.3);
+  letter-spacing: 0.04em;
+}
+.ct-bar {
+  position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+  width: 40%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(200,147,52,0.4), transparent);
+}
+
+/* Sections */
+.cs-section { padding-block: 48px; border-bottom: 1px solid var(--line); }
+.cs-section:last-child { border-bottom: none; }
+.cs-section-label {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+}
+.cs-section h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 300; line-height: 1.2; color: var(--text); margin-bottom: 20px;
+}
+.cs-section p { font-size: 0.95rem; color: var(--text-2); line-height: 1.8; margin-bottom: 16px; }
+.cs-section p:last-child { margin-bottom: 0; }
+.cs-section strong { color: var(--text); font-weight: 500; }
+
+/* Stats row */
+.stats-row {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px; margin-block: 28px;
+}
+.stat-box {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px 16px;
+}
+.stat-num {
+  font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300;
+  color: var(--accent); line-height: 1; margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-desc { font-size: 0.78rem; color: var(--text-3); line-height: 1.4; }
+
+/* Feature list */
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-block: 20px; }
+.feature-list li {
+  padding: 14px 18px; background: var(--surface);
+  border-radius: 10px; border-left: 3px solid var(--accent);
+  font-size: 0.9rem; color: var(--text-2); line-height: 1.6;
+}
+.feature-list li strong { color: var(--text); font-weight: 500; }
+
+/* Usability table */
+.ux-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-block: 20px; }
+.ux-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px;
+}
+.ux-card-label {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.ux-problem .ux-card-label { color: #C05A3A; }
+.ux-fix .ux-card-label { color: var(--accent); }
+.ux-card p { font-size: 0.85rem; color: var(--text-2); line-height: 1.55; }
+
+/* Quote */
+.cs-quote {
+  border-left: 3px solid var(--warm); padding-left: 20px;
+  margin-block: 24px;
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+  font-size: 1.1rem; color: var(--text-2); line-height: 1.6;
+}
+
+/* CTA */
+.cs-cta {
+  display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px; border-radius: 100px;
+  font-family: 'Jost', sans-serif; font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: var(--bg); border: 1.5px solid var(--accent); }
+.btn-primary:hover { background: transparent; color: var(--accent); }
+.btn-ghost { background: transparent; color: var(--text-2); border: 1.5px solid var(--line); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--line); padding-block: 48px;
+  text-align: center;
+}
+footer p { font-size: 0.8rem; color: var(--text-3); }
+footer a { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .ux-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .cs-cta { flex-direction: column; }
+  .btn { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+
+<nav>
+
+  <a href="portfolio.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    All Work
+  </a>
+</nav>
+
+<div class="wrap">
+
+  <section class="cs-hero">
+    <div class="cs-eyebrow">
+      <span class="tag tag-green">UI Development</span>
+      <span class="tag">UX Research</span>
+      <span class="tag">Front-End</span>
+    </div>
+    <h1 class="cs-title">The <em>Catfish Bar</em><br>— Website Redesign</h1>
+    <p class="cs-subtitle">A vintage Melbourne bar needed a working website. I built one from scratch — seven pages, a full e-commerce flow, and real interactive features — all in vanilla HTML, CSS, and JavaScript.</p>
+    <div class="cs-meta">
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Sole designer &amp; developer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Focus</span>
+        <span class="meta-value">UI Development</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tools</span>
+        <span class="meta-value">HTML · CSS · JavaScript</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-thumb">
+    <div class="cs-thumb-text">
+      <span class="ct-sub">30 Gertrude St, Fitzroy</span>
+      <span class="ct-title">The Catfish Bar</span>
+      <span class="ct-sub">Craft Beer &amp; Live Music</span>
+    </div>
+    <div class="ct-bar"></div>
+  </div>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Overview</p>
+    <h2>A broken bar website, rebuilt from the ground up</h2>
+    <p>The Catfish Bar is a fictional craft beer and live music venue in Fitzroy, Melbourne. The brief asked me to identify what was broken about an existing design and rebuild it — with real functionality, not just visuals.</p>
+    <p>I rebuilt the entire site with a <strong>vintage dark-green and amber aesthetic</strong> that felt true to the bar's character: handcrafted, warm, slightly rough around the edges. Playfair Display SC for the headings, cream text on deep green backgrounds, amber glow accents throughout.</p>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">7</div><div class="stat-desc">HTML pages across the site</div></div>
+      <div class="stat-box"><div class="stat-num">12</div><div class="stat-desc">craft beers in the live catalogue</div></div>
+      <div class="stat-box"><div class="stat-num">710</div><div class="stat-desc">lines of JavaScript</div></div>
+      <div class="stat-box"><div class="stat-num">4</div><div class="stat-desc">usability problems found &amp; fixed</div></div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">What I Built</p>
+    <h2>Seven pages, fully wired up</h2>
+    <p>Every page serves a purpose. The product catalogue is live — you can search, filter by style, and add items to a cart that persists as you browse. The checkout flow validates your input and gives you a confirmation. Nothing is faked.</p>
+
+    <ul class="feature-list">
+      <li><strong>Real-time search &amp; filtering</strong> — type a beer name or pick a style tag and the catalogue updates instantly, no page reload.</li>
+      <li><strong>Persistent shopping cart</strong> — add items, navigate away, come back — the cart remembers. Quantity controls, running total, remove items.</li>
+      <li><strong>Checkout &amp; confirmation flow</strong> — form validation, an order summary, and a confirmation page that ties it all together.</li>
+      <li><strong>Responsive layout</strong> — designed at 390px (iPhone) and 1440px (desktop), tested in between. No horizontal scrolling, no broken text.</li>
+    </ul>
+
+    <p>The CSS is modular: separate files for layout, components, and each page. This made it much easier to debug — if a card looked wrong, I knew exactly which file to open.</p>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Usability Testing</p>
+    <h2>I tested it, found problems, then fixed them</h2>
+    <p>After building the first version, I ran usability tests and identified four problems that real users kept running into:</p>
+
+    <div class="ux-grid">
+      <div class="ux-card ux-problem">
+        <p class="ux-card-label">Problem 1</p>
+        <p>The cart icon gave no feedback when an item was added — users didn't know if it worked.</p>
+      </div>
+      <div class="ux-card ux-fix">
+        <p class="ux-card-label">Fix</p>
+        <p>Added a count badge on the cart icon and a brief "Added!" toast notification.</p>
+      </div>
+      <div class="ux-card ux-problem">
+        <p class="ux-card-label">Problem 2</p>
+        <p>The search bar was hard to find — users expected it at the top of the product page.</p>
+      </div>
+      <div class="ux-card ux-fix">
+        <p class="ux-card-label">Fix</p>
+        <p>Moved search to the top of the catalogue, above the filter tabs.</p>
+      </div>
+      <div class="ux-card ux-problem">
+        <p class="ux-card-label">Problem 3</p>
+        <p>Filter tags and search results didn't combine — filtering cleared the search.</p>
+      </div>
+      <div class="ux-card ux-fix">
+        <p class="ux-card-label">Fix</p>
+        <p>Rewrote the JS filter logic so both conditions apply simultaneously.</p>
+      </div>
+      <div class="ux-card ux-problem">
+        <p class="ux-card-label">Problem 4</p>
+        <p>The checkout button was disabled until the form was complete, with no explanation why.</p>
+      </div>
+      <div class="ux-card ux-fix">
+        <p class="ux-card-label">Fix</p>
+        <p>Added inline validation messages so users know which fields still need attention.</p>
+      </div>
+    </div>
+
+    <blockquote class="cs-quote">"Testing felt like cheating at first — I thought I knew my own site. Then someone couldn't find the search bar and I realised I'd been looking at it too long."</blockquote>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Reflection</p>
+    <h2>What I learned</h2>
+    <p>This was the first project where I was fully responsible for both the design and the code. The most valuable thing wasn't any particular technique — it was learning to <strong>treat design decisions as hypotheses</strong>, not conclusions. Every layout choice I made before testing turned out to have at least one thing I'd gotten wrong.</p>
+    <p>Writing 710 lines of JavaScript also taught me something about scope: the features that took longest weren't the flashy ones (search, filters) — it was the edge cases. What happens when someone adds 0 of something? What if the form submits twice? The invisible 20% of the work.</p>
+
+    <div class="cs-cta">
+      <a href="https://faye10101.github.io/the_catfish_bar/" target="_blank" rel="noopener" class="btn btn-primary">View Live Site ↗</a>
+      <a href="https://www.figma.com/proto/ts4iwII09VYj1h8fsT78mA/INFO20005-Assignment-2?node-id=27-88&p=f&viewport=-25%2C114%2C0.09&t=xUyOgG4jgTm7iNGL-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=27%3A88&show-proto-sidebar=1&page-id=0%3A1">Figma Prototype ↗</a>
+      <a href="https://github.com/Faye10101/the_catfish_bar" target="_blank" rel="noopener" class="btn btn-ghost">GitHub Repository</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Faye Lyu · <a href="portfolio.html">Back to portfolio</a></p>
+</footer>

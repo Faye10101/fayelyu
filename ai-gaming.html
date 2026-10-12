@@ -1,0 +1,381 @@
+<title>AI Teammate Research — Faye Lyu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg:#F4EFE6; --bg-2:#EAE2D1; --surface:#EDE5D4; --surface-2:#E3D9C6;
+  --text:#1C1814; --text-2:#7D7066; --text-3:#A69B8E;
+  --accent:#4E6B45; --accent-lt:#7EA874; --warm:#C08B52; --line:#D3C8B8;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#18150F; --bg-2:#211D16; --surface:#252019; --surface-2:#2E2820;
+    --text:#EAE1D3; --text-2:#8A7E73; --text-3:#5E5449;
+    --accent:#7BAD72; --accent-lt:#A8D49F; --warm:#D4A368; --line:#38302A;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#18150F; --bg-2:#211D16; --surface:#252019; --surface-2:#2E2820;
+  --text:#EAE1D3; --text-2:#8A7E73; --text-3:#5E5449;
+  --accent:#7BAD72; --accent-lt:#A8D49F; --warm:#D4A368; --line:#38302A;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 16px; line-height: 1.65;
+  padding-inline: 24px; padding-block: 0;
+}
+a { color: inherit; text-decoration: none; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--nav-h); background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding-inline: clamp(20px,5vw,64px); z-index: 100;
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 400; }
+.nav-logo span { color: var(--accent); }
+.nav-back {
+  font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--text-2); display: flex; align-items: center; gap: 6px;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--accent); }
+
+.wrap { max-width: 800px; margin-inline: auto; }
+
+.cs-hero { padding-block: calc(var(--nav-h) + 60px) 64px; border-bottom: 1px solid var(--line); }
+.cs-eyebrow { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.tag {
+  display: inline-block; padding: 3px 10px; border-radius: 100px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.05em;
+  background: var(--surface-2); color: var(--text-2);
+}
+.tag-green { background: rgba(78,107,69,0.15); color: var(--accent); }
+.cs-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 300; line-height: 1.1;
+  letter-spacing: -0.02em; text-wrap: balance; margin-bottom: 20px;
+}
+.cs-title em { font-style: italic; color: var(--accent); }
+.cs-subtitle { font-size: 1.05rem; color: var(--text-2); line-height: 1.7; margin-bottom: 40px; }
+.cs-meta { display: flex; flex-wrap: wrap; gap: 24px; padding-top: 28px; border-top: 1px solid var(--line); }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+.meta-value { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+/* Thumb */
+.cs-thumb {
+  width: 100%; aspect-ratio: 16/7;
+  border-radius: 16px; overflow: hidden;
+  margin-block: 48px;
+  background: #0E1625; position: relative;
+}
+.cs-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(108,140,210,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,140,210,0.1) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+.cs-thumb::after {
+  content: '';
+  position: absolute; top: 40%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(130,100,210,0.4) 0%, transparent 70%);
+}
+.cs-thumb-chips {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+}
+.cs-chip {
+  padding: 6px 16px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
+}
+.chip-1 { background: rgba(100,160,220,0.18); color: rgba(140,190,240,0.9); border: 1px solid rgba(100,160,220,0.25); }
+.chip-2 {
+  background: rgba(130,100,210,0.2); color: rgba(170,150,240,0.95);
+  border: 1px solid rgba(130,100,210,0.3);
+  font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9rem;
+  letter-spacing: 0;
+}
+.chip-3 { background: rgba(100,160,220,0.12); color: rgba(140,190,240,0.7); border: 1px solid rgba(100,160,220,0.15); }
+
+/* Sections */
+.cs-section { padding-block: 48px; border-bottom: 1px solid var(--line); }
+.cs-section:last-child { border-bottom: none; }
+.cs-section-label {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+}
+.cs-section h2 {
+  font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 300; line-height: 1.2; color: var(--text); margin-bottom: 20px;
+}
+.cs-section p { font-size: 0.95rem; color: var(--text-2); line-height: 1.8; margin-bottom: 16px; }
+.cs-section p:last-child { margin-bottom: 0; }
+.cs-section strong { color: var(--text); font-weight: 500; }
+
+/* Stats */
+.stats-row {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 16px; margin-block: 28px;
+}
+.stat-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px 16px; }
+.stat-num {
+  font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 300;
+  color: var(--accent); line-height: 1; margin-bottom: 6px;
+}
+.stat-desc { font-size: 0.78rem; color: var(--text-3); line-height: 1.4; }
+
+/* Process steps */
+.process-steps { display: flex; flex-direction: column; gap: 0; margin-block: 24px; }
+.process-step {
+  display: grid; grid-template-columns: 40px 1fr;
+  gap: 16px; padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.process-step:last-child { border-bottom: none; }
+.step-num {
+  font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 300;
+  color: var(--line); line-height: 1; padding-top: 2px;
+}
+.step-content h4 { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.step-content p { font-size: 0.875rem; color: var(--text-2); line-height: 1.65; margin: 0; }
+
+/* Themes */
+.theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-block: 24px; }
+.theme-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px;
+}
+.theme-num {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 8px;
+}
+.theme-card h4 { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+.theme-card p { font-size: 0.82rem; color: var(--text-2); line-height: 1.55; margin: 0; }
+
+/* Contribution highlight */
+.contribution-bar {
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px; margin-block: 24px;
+}
+.contribution-bar h4 { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+.contribution-bar ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.contribution-bar li {
+  font-size: 0.875rem; color: var(--text-2);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.contribution-bar li::before {
+  content: '✦'; color: var(--accent); font-size: 0.6rem;
+  flex-shrink: 0; margin-top: 5px;
+}
+
+.cs-quote {
+  border-left: 3px solid var(--warm); padding-left: 20px;
+  margin-block: 24px;
+  font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+  font-size: 1.1rem; color: var(--text-2); line-height: 1.6;
+}
+
+/* CTA */
+.cs-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 28px; border-radius: 100px;
+  font-family: 'Jost', sans-serif; font-size: 0.875rem; font-weight: 500;
+  letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: var(--bg); border: 1.5px solid var(--accent); }
+.btn-primary:hover { background: transparent; color: var(--accent); }
+.btn-ghost { background: transparent; color: var(--text-2); border: 1.5px solid var(--line); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+footer { border-top: 1px solid var(--line); padding-block: 48px; text-align: center; }
+footer p { font-size: 0.8rem; color: var(--text-3); }
+footer a { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .theme-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<nav>
+
+  <a href="portfolio.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    All Work
+  </a>
+</nav>
+
+<div class="wrap">
+
+  <section class="cs-hero">
+    <div class="cs-eyebrow">
+      <span class="tag tag-green">UX Research</span>
+      <span class="tag">Interaction Design</span>
+      <span class="tag">Personas</span>
+    </div>
+    <h1 class="cs-title"><em>AI Teammate</em> —<br>Gaming Communication Research</h1>
+    <p class="cs-subtitle">A qualitative research project exploring how AI can help people communicate and collaborate better in multiplayer games — starting with the real frustrations of real players.</p>
+    <div class="cs-meta">
+      <div class="meta-item">
+        <span class="meta-label">My Role</span>
+        <span class="meta-value">Researcher · Persona author</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Focus</span>
+        <span class="meta-value">Interaction Design</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Methods</span>
+        <span class="meta-value">Interviews · Thematic analysis · Personas</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-thumb">
+    <div class="cs-thumb-chips">
+      <span class="cs-chip chip-1">9 semi-structured interviews · thematic analysis</span>
+      <span class="cs-chip chip-2">How can AI assist teams in multiplayer games?</span>
+      <span class="cs-chip chip-3">3 personas · 3 conceptual designs</span>
+    </div>
+  </div>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Overview</p>
+    <h2>Starting with the friction, not the technology</h2>
+    <p>Multiplayer games are full of communication problems — players talking over each other, language barriers, toxic teammates, and no easy way to coordinate strategy in the middle of a match. Our team's question wasn't "what can AI do?" — it was <strong>"what do players actually need?"</strong></p>
+    <p>We conducted nine semi-structured interviews with undergraduate gamers at the University of Melbourne, then used Braun and Clarke's six-phase thematic analysis to find patterns in what they told us. From there, we built personas and conceptual designs grounded in those patterns.</p>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">9</div><div class="stat-desc">interviews, 15–20 min each</div></div>
+      <div class="stat-box"><div class="stat-num">4</div><div class="stat-desc">themes identified in analysis</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-desc">user personas created</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-desc">conceptual AI features proposed</div></div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">My Contributions</p>
+    <h2>What I specifically worked on</h2>
+    <p>This was a group project, and we divided the work clearly so each person owned something meaningful from start to finish.</p>
+
+    <div class="contribution-bar">
+      <h4>My contributions to the project:</h4>
+      <ul>
+        <li>Helped design the interview question set — contributed 5 questions, participated in the group discussion to refine the final 10</li>
+        <li>Conducted 3 of the 9 interviews, managing consent, note-taking, and (where agreed) audio recording</li>
+        <li>Wrote the project introduction — establishing the research context and framing the central question</li>
+        <li>Created one of the three personas, developing a character grounded in interview insights</li>
+        <li>Drafted the user scenario for that persona, imagining how the AI assistant would actually fit into their gameplay</li>
+      </ul>
+    </div>
+
+    <p>Beyond my specific tasks, I also contributed to our weekly group meetings, shared progress in our Google Doc, and helped with peer review of each other's writing. Since English is not my first language, working in a collaborative editing environment — where teammates could help me refine my writing — was something I found genuinely valuable.</p>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Process</p>
+    <h2>From interviews to insights to design</h2>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h4>Background research</h4>
+          <p>We reviewed existing gaming AI tools — Mobalytics, NVIDIA's Project G-Assist — to understand what already existed and where the gaps were. Academic literature on communication and toxicity in online games shaped our interview questions.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h4>Semi-structured interviews</h4>
+          <p>Nine participants: undergraduate students aged 18–21, all currently playing team-based games. We asked about their communication habits, frustrations, leadership experiences, and views on AI. Each interview ran ~15 minutes, face-to-face on campus.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h4>Thematic analysis (Braun &amp; Clarke)</h4>
+          <p>We followed the six-phase process: familiarise, generate codes, group into themes, review, name, write up. This gave us a structured way to move from individual answers to bigger patterns about what players really cared about.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h4>Personas &amp; scenarios</h4>
+          <p>Each persona was grounded in one of our three identified player types: Joey Zhang (competitive, communication-focused), Alex Phillips (casual, social), and Ahmed (facing language and inclusion barriers). Scenarios made the AI features concrete.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="step-num">05</span>
+        <div class="step-content">
+          <h4>Conceptual designs</h4>
+          <p>Three AI features proposed: a Game Plan Summary (condenses teammate chat into a pinned strategy brief), Real-Time Translation (for cross-language teams), and Quick Search (in-game knowledge lookup). Each was tied back to a specific theme and persona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Key Findings</p>
+    <h2>Four themes that shaped everything</h2>
+
+    <div class="theme-grid">
+      <div class="theme-card">
+        <p class="theme-num">Theme 1</p>
+        <h4>Communication Speed &amp; Clarity</h4>
+        <p>Players need to share key information fast — positions, cooldowns, intentions. Slow or unclear communication directly causes lost rounds.</p>
+      </div>
+      <div class="theme-card">
+        <p class="theme-num">Theme 2</p>
+        <h4>Frustration with Current Methods</h4>
+        <p>Toxicity, language barriers, and teammates who ignore the group chat all erode the experience. Frustration was consistent across skill levels.</p>
+      </div>
+      <div class="theme-card">
+        <p class="theme-num">Theme 3</p>
+        <h4>Leadership &amp; Responsibility</h4>
+        <p>Some players avoid leadership roles because of the pressure and blame when things go wrong. Others step up only when teammates are clearly struggling.</p>
+      </div>
+      <div class="theme-card">
+        <p class="theme-num">Theme 4</p>
+        <h4>Views Towards AI Assistance</h4>
+        <p>Participants were open to AI helping — but only for specific, concrete tasks. Vague AI features didn't resonate; players needed to imagine what it would actually do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <p class="cs-section-label">Reflection</p>
+    <h2>What I'd do differently — and what I learned</h2>
+    <p>The research uncovered rich insights about player frustrations, but our questions about AI were too abstract. Participants struggled to imagine what AI could actually do, so their answers were vague. In hindsight, <strong>I would have shown a rough sketch of an AI feature</strong> before asking about it — giving people something concrete to react to.</p>
+    <p>This was also my first time conducting face-to-face interviews. I was nervous at the start, but having carefully prepared questions and a team that had rehearsed together made the process feel more manageable. By the third interview I'd found a rhythm.</p>
+
+    <blockquote class="cs-quote">"The questions about toxicity and frustration got the richest answers — because players had lived those moments. The questions about AI got the most hesitation — because they hadn't."</blockquote>
+
+    <p>The strongest thing about our final design concept was recognising that <strong>one solution doesn't fit all players</strong>. A competitive player wants condensed, fast signals. A casual player might want a coach. That distinction — coming directly from the interviews — felt like a real contribution.</p>
+
+    <div class="cs-cta">
+      <a href="https://www.figma.com/proto/q3muOypXH45uPtmPMkyKy2/Assignment-3-Figma-Prototype?node-id=345-1480&p=f&viewport=187%2C462%2C0.02&t=eSZP50sdWHEm70Bw-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=345%3A1480&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener" class="btn btn-primary">View Figma Prototype ↗</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Faye Lyu · <a href="portfolio.html">Back to portfolio</a></p>
+</footer>
